@@ -1,4 +1,4 @@
-# db-stream-loader
+# db-streamer
 A library to stream data into a SQL database.
 
 ## Current Status:
