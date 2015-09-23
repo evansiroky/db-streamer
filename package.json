@@ -1,0 +1,40 @@
+{
+  "name": "db-streamer",
+  "version": "0.0.0",
+  "description": "A library to stream data into a SQL database.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test-pg && npm run test-sequelize-bulk-insert",
+    "test-pg": "mocha tests/testPg.js",
+    "test-sequelize-bulk-insert": "mocha tests/testSequelizeBulkInsert.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djstroky/db-streamer.git"
+  },
+  "keywords": [
+    "database",
+    "db",
+    "stream",
+    "postgresql"
+  ],
+  "author": "Evan Siroky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/djstroky/db-streamer/issues"
+  },
+  "homepage": "https://github.com/djstroky/db-streamer#readme",
+  "devDependencies": {
+    "bluebird": "^2.10.1",
+    "mocha": "^2.3.3",
+    "pg": "^4.4.2",
+    "pg-copy-streams": "^0.3.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.9.0"
+  },
+  "dependencies": {
+    "async": "^1.4.2",
+    "moment": "^2.10.6",
+    "url-parse": "^1.0.2"
+  }
+}
