@@ -1,4 +1,7 @@
 # db-streamer
+
+[![npm version](https://badge.fury.io/js/db-streamer.svg)](http://badge.fury.io/js/db-streamer)
+
 A library to stream data into a SQL database.
 
 ## Current Status
