@@ -8,7 +8,7 @@ A library to stream data into a SQL database.
 
 Project is in alpha version.  Currently supports streaming data into PostgreSQL table.
 
-## Example Usage
+## Usage
 
     var dbStreamer = require('db-streamer');
     
@@ -34,6 +34,21 @@ Project is in alpha version.  Currently supports streaming data into PostgreSQL 
       inserter.end();
 
     });
+    
+### Inserter Config
+
+| Key | Description |
+| --- | --- |
+| dbConnString | A database connection string. |
+| tableName | The tablename to insert into. |
+| columns | Array of column names. |
+
+### Inserter Config (Sequelize Bulk Insert alternative)
+
+| Key | Description |
+| --- | --- |
+| useSequelizeBulkInsert | Boolean.  Perform the insert using a combination of [async.cargo](https://github.com/caolan/async#cargo) and [sequelize bulkInsert](http://docs.sequelizejs.com/en/latest/api/model/#bulkcreaterecords-options-promisearrayinstance).  Must provide `sequelizeModel` parameter too. |
+| sequelizeModel | The sequelize model to perform a bulk insert with. |
 
 ## PostgreSQL
 
