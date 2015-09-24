@@ -58,6 +58,8 @@ Project is in alpha version.  Currently supports streaming data into PostgreSQL 
 | dbConnString | A database connection string. |
 | tableName | The tablename to insert into. |
 | columns | Array of column names. |
+| client | Optional.  A database client.  Provide this in place of dbConnString. |
+| deferUntilEnd | Boolean (default=false).  Stream output to temporary file which is then streamed in all at once into table upon calling `end`. |
 
 ### Inserter Config (Sequelize Bulk Insert alternative)
 
@@ -65,6 +67,7 @@ Project is in alpha version.  Currently supports streaming data into PostgreSQL 
 | --- | --- |
 | useSequelizeBulkInsert | Boolean.  Perform the insert using a combination of [async.cargo](https://github.com/caolan/async#cargo) and [sequelize bulkInsert](http://docs.sequelizejs.com/en/latest/api/model/#bulkcreaterecords-options-promisearrayinstance).  Must provide `sequelizeModel` parameter too. |
 | sequelizeModel | The sequelize model to perform a bulk insert with. |
+| deferUntilEnd | Boolean (default=false).  Pause all cargo iterations until calling `end`. |
 
 ## PostgreSQL
 
