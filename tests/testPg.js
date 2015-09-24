@@ -11,8 +11,14 @@ var sequelizeConfig = 'postgres://streamer:streamer@localhost:5432/streamer-test
   };
 
 describe('pg-load', function() {
-  it('should load', function() {
+  it('copy stream should load', function() {
     var testMainPromise = Promise.promisify(testMain);
+    return testMainPromise(testModel(sequelizeConfig), streamerConfig);
+  });
+
+  it('deferred copy stream should load', function() {
+    var testMainPromise = Promise.promisify(testMain);
+    streamerConfig.deferUntilEnd = true;
     return testMainPromise(testModel(sequelizeConfig), streamerConfig);
   });
 });

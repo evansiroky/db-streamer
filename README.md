@@ -27,11 +27,11 @@ Project is in alpha version.  Currently supports streaming data into PostgreSQL 
       inserter.push({a: 2, b: 'two', c: new Date() });
       inserter.push({a: 3, b: 'three', c: new Date() });
 
-      // announce end
-      inserter.end();
-
       // set end callback
       inserter.setEndHandler(callback);
+
+      // announce end
+      inserter.end();
 
     });
 

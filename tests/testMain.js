@@ -16,11 +16,11 @@ module.exports = function(testModel, streamerConfig, callback) {
       inserter.push({a: 2, b: 'two', c: new Date() });
       inserter.push({a: 3, b: 'three', c: new Date() });
 
-      // announce end
-      inserter.end();
-
       // set end callback
       inserter.setEndHandler(callback);
+
+      // announce end
+      inserter.end();
 
     });
 

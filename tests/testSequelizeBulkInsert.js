@@ -14,8 +14,16 @@ var sequelizeConfig = 'postgres://streamer:streamer@localhost:5432/streamer-test
   };
 
 describe('sequelize-bulk-insert-load', function() {
-  it('should load', function() {
+  
+  it('bulkInsert should load', function() {
     var testMainPromise = Promise.promisify(testMain);
     return testMainPromise(testModel, streamerConfig);
   });
+
+  it('deferred bulkInsert should load', function() {
+    var testMainPromise = Promise.promisify(testMain);
+    streamerConfig.deferUntilEnd = true;
+    return testMainPromise(testModel, streamerConfig);
+  });
+
 });
