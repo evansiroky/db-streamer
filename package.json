@@ -1,6 +1,6 @@
 {
   "name": "db-streamer",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A library to stream data into a SQL database.",
   "main": "index.js",
   "scripts": {
