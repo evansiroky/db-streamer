@@ -10,11 +10,12 @@ Project is in alpha version.  Currently supports streaming data into PostgreSQL 
 
 ## Usage
 
-    var dbStreamer = require('db-streamer');
+    var dbStreamer = require('db-streamer'),
+      connString = 'postgres://streamer:streamer@localhost:5432/streamer-test';
     
     // create inserter
     var inserter = dbStreamer.getInserter({
-      dbConnString: 'postgres://streamer:streamer@localhost:5432/streamer-test',
+      dbConnString: connString,
       tableName: 'test_table',
       columns: ['a', 'b', 'c']
     });
@@ -30,9 +31,9 @@ Project is in alpha version.  Currently supports streaming data into PostgreSQL 
       // create child table inserter using deferring strategy
       // this is useful to avoid missing foreign key conflicts as a result of race conditions
       var childInserter = dbStreamer.getInserter({
+        dbConnString: connString,
         tableName: 'child_table',
         columns: ['a', 'd', 'e'],
-        client: client,
         deferUntilEnd: true
       });
 
@@ -58,7 +59,6 @@ Project is in alpha version.  Currently supports streaming data into PostgreSQL 
 | dbConnString | A database connection string. |
 | tableName | The tablename to insert into. |
 | columns | Array of column names. |
-| client | Optional.  A database client.  Provide this in place of dbConnString. |
 | deferUntilEnd | Boolean (default=false).  Stream output to temporary file which is then streamed in all at once into table upon calling `end`. |
 
 ### Inserter Config (Sequelize Bulk Insert alternative)

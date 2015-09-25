@@ -9,7 +9,7 @@ module.exports = function(testModel, streamerConfig, callback) {
     var inserter = dbStreamer.getInserter(streamerConfig);
 
     // establish connection
-    inserter.connect(function(err, client) {
+    inserter.connect(function(err) {
 
       // push some rows
       inserter.push({a: 1, b: 'one', c: new Date() });
@@ -17,7 +17,6 @@ module.exports = function(testModel, streamerConfig, callback) {
       inserter.push({a: 3, b: 'three', c: new Date() });
 
       // create defered inserter
-      streamerConfig.client = client;
       streamerConfig.deferUntilEnd = true;
       var deferedInserter = dbStreamer.getInserter(streamerConfig);
 
