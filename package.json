@@ -4,7 +4,8 @@
   "description": "A library to stream data into a SQL database.",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test-pg && npm run test-sequelize-bulk-insert",
+    "test": "npm run test-pg && npm run test-mysql && npm run test-sequelize-bulk-insert",
+    "test-mysql": "mocha tests/testMySQL.js",
     "test-pg": "mocha tests/testPg.js",
     "test-sequelize-bulk-insert": "mocha tests/testSequelizeBulkInsert.js"
   },
@@ -27,10 +28,12 @@
   "devDependencies": {
     "bluebird": "^2.10.1",
     "mocha": "^2.3.3",
+    "mysql": "^2.9.0",
     "pg": "^4.4.2",
     "pg-copy-streams": "^0.3.0",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.9.0"
+    "sequelize": "^3.9.0",
+    "streamsql": "^0.8.5"
   },
   "dependencies": {
     "async": "^1.4.2",

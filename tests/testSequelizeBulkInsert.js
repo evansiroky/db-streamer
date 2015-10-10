@@ -10,7 +10,7 @@ var sequelizeConfig = 'postgres://streamer:streamer@localhost:5432/streamer-test
     sequelizeModel: testModel
   };
 
-describe('sequelize-bulk-insert-load', function() {
+describe('sequelize', function() {
   it('bulkInsert should load', function() {
     var testMainPromise = Promise.promisify(testMain);
     return testMainPromise(testModel, streamerConfig);

@@ -6,7 +6,22 @@ A library to stream data into a SQL database.
 
 ## Current Status
 
-Project is in alpha version.  Currently supports streaming data into PostgreSQL table.
+Project is in alpha version.  Currently supports streaming data into PostgreSQL or MySQL table.
+
+## Additional Dependencies
+
+In order to use this library, you must also install the additional libraries in your project depending on the database that you use.
+
+### PostgreSQL
+
+    npm install pg --save
+    npm install pg-copy-streams --save
+    npm install pg-hstore --save
+
+### MySQL
+
+    npm install mysql --save
+    npm install streamsql --save
 
 ## Usage
 
@@ -68,13 +83,3 @@ Project is in alpha version.  Currently supports streaming data into PostgreSQL 
 | useSequelizeBulkInsert | Boolean.  Perform the insert using a combination of [async.cargo](https://github.com/caolan/async#cargo) and [sequelize bulkInsert](http://docs.sequelizejs.com/en/latest/api/model/#bulkcreaterecords-options-promisearrayinstance).  Must provide `sequelizeModel` parameter too. |
 | sequelizeModel | The sequelize model to perform a bulk insert with. |
 | deferUntilEnd | Boolean (default=false).  Pause all cargo iterations until calling `end`. |
-
-## PostgreSQL
-
-### Additional Dependencies
-
-In order to use this library, you must also install the following libraries:
-
-    npm install pg --save
-    npm install pg-copy-streams --save
-    npm install pg-hstore --save

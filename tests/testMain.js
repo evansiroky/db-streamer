@@ -24,8 +24,12 @@ module.exports = function(testModel, streamerConfig, callback) {
       deferedInserter.setEndHandler(callback);
 
       // set end callback
-      inserter.setEndHandler(function() {
-        deferedInserter.end();
+      inserter.setEndHandler(function(err) {
+        if(err) {
+          callback(err);
+        } else {
+          deferedInserter.end();
+        }
       });
 
       // announce end
