@@ -74,6 +74,7 @@ In order to use this library, you must also install the additional libraries in 
 | dbConnString | A database connection string. |
 | tableName | The tablename to insert into. |
 | columns | Array of column names. |
+| primaryKey | Required if using MySQL.  String of the primary key (defaults to `id` if omitted). |
 | deferUntilEnd | Boolean (default=false).  Stream output to temporary file which is then streamed in all at once into table upon calling `end`. |
 
 ### Inserter Config (Sequelize Bulk Insert alternative)
