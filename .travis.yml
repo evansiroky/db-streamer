@@ -15,11 +15,11 @@ services:
   - postgresql
 
 before_script:
-  - "mysql -uroot -e 'create database streamer_test'"
-  - "mysql -uroot -e 'GRANT ALL PRIVILEGES ON *.* TO \"streamer\"@\"%\" IDENTIFIED BY \"streamer\" WITH GRANT OPTION'"
-  - "mysql -uroot -e 'FLUSH PRIVILEGES'"
-  - "psql -U postgres -c 'CREATE DATABASE streamer_test'"
-  - "psql -U postgres -c 'CREATE USER streamer PASSWORD \"streamer\"'"
-  - "psql -U postgres -c 'CREATE ROLE streamer_role'"
-  - "psql -U postgres -c 'GRANT streamer_role TO streamer'"
-  - "psql -U postgres -c 'GRANT ALL ON DATABASE streamer_test TO streamer_role'"
+  - mysql -uroot -e 'create database streamer_test'
+  - mysql -uroot -e 'GRANT ALL PRIVILEGES ON *.* TO "streamer"@"%" IDENTIFIED BY "streamer" WITH GRANT OPTION'
+  - mysql -uroot -e 'FLUSH PRIVILEGES'
+  - psql -U postgres -c 'CREATE DATABASE streamer_test'
+  - psql -U postgres -c "CREATE USER streamer PASSWORD 'streamer'"
+  - psql -U postgres -c 'CREATE ROLE streamer_role'
+  - psql -U postgres -c 'GRANT streamer_role TO streamer'
+  - psql -U postgres -c 'GRANT ALL ON DATABASE streamer_test TO streamer_role'
