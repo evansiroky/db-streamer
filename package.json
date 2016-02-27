@@ -4,14 +4,13 @@
   "description": "A library to stream data into a SQL database.",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test-pg && npm run test-mysql && npm run test-sequelize-bulk-insert",
-    "test-mysql": "mocha tests/testMySQL.js",
-    "test-pg": "mocha tests/testPg.js",
-    "test-sequelize-bulk-insert": "mocha tests/testSequelizeBulkInsert.js"
+    "test": "npm run test-postgres && npm run test-mysql",
+    "test-mysql": "cross-env DIALECT=mysql mocha tests/integration/load.test.js",
+    "test-postgres": "cross-env DIALECT=postgres mocha tests/integration/load.test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/djstroky/db-streamer.git"
+    "url": "git+https://github.com/evansiroky/db-streamer.git"
   },
   "keywords": [
     "database",
@@ -22,11 +21,18 @@
   "author": "Evan Siroky",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/djstroky/db-streamer/issues"
+    "url": "https://github.com/evansiroky/db-streamer/issues"
   },
-  "homepage": "https://github.com/djstroky/db-streamer#readme",
+  "homepage": "https://github.com/evansiroky/db-streamer#readme",
+  "dependencies": {
+    "async": "^1.4.2",
+    "moment": "^2.10.6",
+    "url-parse": "^1.0.2"
+  },
   "devDependencies": {
     "bluebird": "^2.10.1",
+    "chai": "^3.5.0",
+    "cross-env": "^1.0.7",
     "mocha": "^2.3.3",
     "mysql": "^2.9.0",
     "pg": "^4.4.2",
@@ -34,10 +40,5 @@
     "pg-hstore": "^2.3.2",
     "sequelize": "^3.9.0",
     "streamsql": "^0.8.5"
-  },
-  "dependencies": {
-    "async": "^1.4.2",
-    "moment": "^2.10.6",
-    "url-parse": "^1.0.2"
   }
 }
