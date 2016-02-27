@@ -13,10 +13,10 @@ var sequelizeConfig,
 
 switch(process.env.DIALECT) {
   case 'mysql':
-    sequelizeConfig = 'mysql://streamer:streamer1234@localhost:3306/streamer-test';
+    sequelizeConfig = 'mysql://streamer:streamer1234@localhost:3306/streamer_test';
     break;
   case 'postgres':
-    sequelizeConfig = 'postgres://streamer:streamer@localhost:5432/streamer-test';
+    sequelizeConfig = 'postgres://streamer:streamer@localhost:5432/streamer_test';
     break;
   default:
     throw new Error('Invalid DIALECT');
