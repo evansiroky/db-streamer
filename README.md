@@ -1,12 +1,8 @@
 # db-streamer
 
-[![npm version](https://badge.fury.io/js/db-streamer.svg)](http://badge.fury.io/js/db-streamer)
+[![Build Status](https://travis-ci.org/evansiroky/db-streamer.svg?branch=master)](https://travis-ci.org/evansiroky/db-streamer) [![npm version](https://badge.fury.io/js/db-streamer.svg)](http://badge.fury.io/js/db-streamer)
 
-A library to stream data into a SQL database.
-
-## Current Status
-
-Project is in alpha version.  Currently supports streaming data into PostgreSQL or MySQL table.
+A library to stream data into a SQL database.  Currently supports streaming data into PostgreSQL or MySQL tables.
 
 ## Additional Dependencies
 
