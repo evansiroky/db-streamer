@@ -4,8 +4,7 @@
   "description": "A library to stream data into a SQL database.",
   "main": "index.js",
   "scripts": {
-    "test": "node scripts/testDelegator.js",
-    "test-code": "mocha tests/integration/load.test.js",
+    "test": "mocha tests/integration/load.test.js",
     "test-mysql": "cross-env DIALECT=mysql mocha tests/integration/load.test.js",
     "test-postgres": "cross-env DIALECT=postgres mocha tests/integration/load.test.js",
     "cover-all": "npm run cover-mysql && npm run cover-postgres && npm run merge-coverage",
