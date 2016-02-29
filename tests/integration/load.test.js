@@ -41,6 +41,7 @@ var assertDataExists = function(expectedObj, usedSequelizeInserter, callback) {
   testModel
     .findOne({ where: { a: expectedObj.a } })
     .then(function(result) {
+        console.log(result, expectedObj);
         for(k in expectedObj) {
           if(k === 'c') {
             var expectedUnix = Math.floor((new Date(expectedObj.c)).getTime() / 1000);
