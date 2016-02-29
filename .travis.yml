@@ -23,3 +23,14 @@ before_script:
   - psql -U postgres -c 'CREATE ROLE streamer_role;'
   - psql -U postgres -c 'GRANT streamer_role TO streamer;'
   - psql -U postgres -c 'GRANT ALL ON DATABASE streamer_test TO streamer_role;'
+
+matrix:
+  fast_finish: true
+  include:
+    - node_js: "0.12"
+      env: COVERAGE=true
+      script: "npm run codeclimate"
+  allow_failures:
+    - node_js: "0.12"
+      env: COVERAGE=true
+      script: "npm run codeclimate"

@@ -37,20 +37,27 @@ var sequelize = new Sequelize(sequelizeConfig, { logging: false }),
     freezeTableName: true
   });
 
-var assertDataExists = function(expectedObj, callback) {
-  testModel
-    .findOne({ where: { a: expectedObj.a } })
-    .then(function(result) {
-        for(k in expectedObj) {
-          if(k === 'c') {
-            assert.equal(moment.utc(expectedObj[k]).unix(), moment.utc(result[k]).unix());
-          } else {
-            assert.equal(expectedObj[k], result[k]);
+var assertDataExists = function(expectedObj, usedSequelizeInserter, callback) {
+  setTimeout(function() {
+    testModel
+      .findOne({ where: { a: expectedObj.a } })
+      .then(function(result) {
+          assert.isNotNull(result);
+          for(k in expectedObj) {
+            if(k === 'c') {
+              var expectedUnix = Math.floor((new Date(expectedObj.c)).getTime() / 1000);
+              if(!usedSequelizeInserter && process.env.DIALECT == 'mysql') {
+                expectedUnix -= (new Date()).getTimezoneOffset() * 60;
+              }
+              assert.equal(moment(result[k]).unix(), expectedUnix);
+            } else {
+              assert.equal(result[k], expectedObj[k]);
+            }
           }
-        }
-      })
-    .then(callback)
-    .catch(callback);
+        })
+      .then(callback)
+      .catch(callback);
+  }, 500);
 }
 
 describe('data loading', function() {
@@ -67,8 +74,7 @@ describe('data loading', function() {
     { method: 'sequelize bulk', config: { useSequelizeBulkInsert: true, sequelizeModel: testModel} }
   ]
 
-  for (var i = 0; i < tests.length; i++) {
-    var test = tests[i];
+  tests.forEach(function(test) {
     it('data should load using ' + test.method + ' inserter', function(done) {
       this.timeout(15000);
 
@@ -94,7 +100,7 @@ describe('data loading', function() {
             if(err) {
               done(err);
             } else {
-              assertDataExists(deferedRow, done)
+              assertDataExists(deferedRow, test.config.useSequelizeBulkInsert, done)
             }
           });
 
@@ -103,7 +109,7 @@ describe('data loading', function() {
           if(err) {
             done(err);
           } else {
-            assertDataExists(firstRow, function(err) {
+            assertDataExists(firstRow, test.config.useSequelizeBulkInsert, function(err) {
                 if(err) {
                   done(err);
                 } else {
@@ -118,5 +124,5 @@ describe('data loading', function() {
 
       });
     });
-  }
+  });
 });
