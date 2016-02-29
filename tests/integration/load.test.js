@@ -38,24 +38,26 @@ var sequelize = new Sequelize(sequelizeConfig, { logging: false }),
   });
 
 var assertDataExists = function(expectedObj, usedSequelizeInserter, callback) {
-  testModel
-    .findOne({ where: { a: expectedObj.a } })
-    .then(function(result) {
-        console.log(result, expectedObj);
-        for(k in expectedObj) {
-          if(k === 'c') {
-            var expectedUnix = Math.floor((new Date(expectedObj.c)).getTime() / 1000);
-            if(!usedSequelizeInserter && process.env.DIALECT == 'mysql') {
-              expectedUnix -= (new Date()).getTimezoneOffset() * 60;
+  setTimeout(function() {
+    testModel
+      .findOne({ where: { a: expectedObj.a } })
+      .then(function(result) {
+          assert.isNotNull(result);
+          for(k in expectedObj) {
+            if(k === 'c') {
+              var expectedUnix = Math.floor((new Date(expectedObj.c)).getTime() / 1000);
+              if(!usedSequelizeInserter && process.env.DIALECT == 'mysql') {
+                expectedUnix -= (new Date()).getTimezoneOffset() * 60;
+              }
+              assert.equal(moment(result[k]).unix(), expectedUnix);
+            } else {
+              assert.equal(result[k], expectedObj[k]);
             }
-            assert.equal(moment(result[k]).unix(), expectedUnix);
-          } else {
-            assert.equal(result[k], expectedObj[k]);
           }
-        }
-      })
-    .then(callback)
-    .catch(callback);
+        })
+      .then(callback)
+      .catch(callback);
+  }, 500);
 }
 
 describe('data loading', function() {
