@@ -6,6 +6,9 @@ node_js:
   - "0.12"
   - "0.10"
 
+env:
+  - COVERAGE=false
+
 services:
   - mysql
   - postgresql
@@ -24,7 +27,9 @@ matrix:
   fast_finish: true
   include:
     - node_js: "0.12"
+      env: COVERAGE=true
       script: "npm run codeclimate"
   allow_failures:
     - node_js: "0.12"
+      env: COVERAGE=true
       script: "npm run codeclimate"
