@@ -47,7 +47,7 @@ var assertDataExists = function(expectedObj, usedSequelizeInserter, callback) {
             if(k === 'c') {
               var expectedUnix = Math.floor((new Date(expectedObj.c)).getTime() / 1000);
               if(!usedSequelizeInserter && process.env.DIALECT == 'mysql') {
-                expectedUnix -= (new Date()).getTimezoneOffset() * 60;
+                expectedUnix -= (new Date(expectedObj.c)).getTimezoneOffset() * 60;
               }
               assert.equal(moment(result[k]).unix(), expectedUnix);
             } else {

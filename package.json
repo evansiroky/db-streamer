@@ -46,7 +46,7 @@
     "cross-env": "^1.0.7",
     "istanbul": "^0.4.2",
     "lcov-result-merger": "^1.0.2",
-    "mocha": "^2.3.3",
+    "mocha": "^2.5.1",
     "mysql": "^2.9.0",
     "pg": "^4.4.2",
     "pg-copy-streams": "^1.0.0",
