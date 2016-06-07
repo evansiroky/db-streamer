@@ -1,4 +1,6 @@
-language: node_js
+cache:
+  directories:
+    - node_modules
 
 node_js:
   - "5"
@@ -12,6 +14,10 @@ env:
 services:
   - mysql
   - postgresql
+
+before_install:
+  - npm i -g npm@^2.0.0
+  - npm prune
 
 before_script:
   - mysql -uroot -e 'CREATE DATABASE streamer_test;'
@@ -33,3 +39,10 @@ matrix:
     - node_js: "0.12"
       env: COVERAGE=true
       script: "npm run codeclimate"
+  
+after_success:
+  - npm run semantic-release
+  
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
