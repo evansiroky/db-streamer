@@ -80,7 +80,3 @@ In order to use this library, you must also install the additional libraries in 
 | useSequelizeBulkInsert | Boolean.  Perform the insert using a combination of [async.cargo](https://github.com/caolan/async#cargo) and [sequelize bulkInsert](http://docs.sequelizejs.com/en/latest/api/model/#bulkcreaterecords-options-promisearrayinstance).  Must provide `sequelizeModel` parameter too. |
 | sequelizeModel | The sequelize model to perform a bulk insert with. |
 | deferUntilEnd | Boolean (default=false).  Pause all cargo iterations until calling `end`. |
-
-### A note on MySQL
-
-If using the deferred inserter with MySQL, the `commit` statement is called after the data is loaded into the database.
