@@ -53,6 +53,7 @@
     "pg": "^5.2.0",
     "pg-copy-streams": "^1.0.0",
     "pg-hstore": "^2.3.2",
+    "promise-polyfill": "^5.2.1",
     "rimraf": "^2.5.2",
     "semantic-release": "^4.3.5",
     "sequelize": "^3.9.0",

@@ -4,6 +4,10 @@ var assert = require('chai').assert,
 
 var dbStreamer = require('../../index.js');
 
+if (typeof Promise == 'undefined') {
+  global.Promise = require('promise-polyfill')
+}
+
 var sequelizeConfig,
   streamerConfig = {
     tableName: 'test_table',
