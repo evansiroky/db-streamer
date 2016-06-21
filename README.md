@@ -14,6 +14,10 @@ In order to use this library, you must also install the additional libraries in 
     npm install pg-copy-streams --save
     npm install pg-hstore --save
 
+#### With pg and node v0.10.x
+
+You must also install the package `promise-polyfill` and write additional code.  See [here](https://github.com/brianc/node-postgres/issues/1057) for more details.
+
 ### MySQL
 
     npm install mysql --save
