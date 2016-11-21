@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/db-streamer.svg)](http://badge.fury.io/js/db-streamer) [![Build Status](https://travis-ci.org/evansiroky/db-streamer.svg?branch=master)](https://travis-ci.org/evansiroky/db-streamer) [![Dependency Status](https://david-dm.org/evansiroky/db-streamer.svg)](https://david-dm.org/evansiroky/db-streamer) [![Test Coverage](https://codeclimate.com/github/evansiroky/db-streamer/badges/coverage.svg)](https://codeclimate.com/github/evansiroky/db-streamer/coverage)
 
-A library to stream data into a SQL database.  Currently supports streaming data into PostgreSQL or MySQL tables.
+A library to stream data into a SQL database.  Currently supports streaming data into PostgreSQL, MySQL or SQLite.
 
 ## Additional Dependencies
 
@@ -23,11 +23,20 @@ You must also install the package `promise-polyfill` and write additional code. 
     npm install mysql --save
     npm install streamsql --save
 
+### SQLite
+
+    npm install sqlite3 --save
+    npm install streamsql --save
+
+#### Deferred inserting w/ SQLite
+
+For now, deferred inserting with SQLite assumes that a unix shell is available to pipe commands to the sqlite3 binary tool.
+
 ## Usage
 
     var dbStreamer = require('db-streamer'),
       connString = 'postgres://streamer:streamer@localhost:5432/streamer-test';
-    
+
     // create inserter
     var inserter = dbStreamer.getInserter({
       dbConnString: connString,
@@ -66,7 +75,7 @@ You must also install the package `promise-polyfill` and write additional code. 
       inserter.end();
 
     });
-    
+
 ### Inserter Config
 
 | Key | Description |
@@ -74,8 +83,9 @@ You must also install the package `promise-polyfill` and write additional code. 
 | dbConnString | A database connection string. |
 | tableName | The tablename to insert into. |
 | columns | Array of column names. |
-| primaryKey | Required if using MySQL.  String of the primary key (defaults to `id` if omitted). |
+| primaryKey | Required if using MySQL or SQLite.  String of the primary key (defaults to `id` if omitted). |
 | deferUntilEnd | Boolean (default=false).  Stream output to temporary file which is then streamed in all at once into table upon calling `end`. |
+| sqliteStorage | Required if using SQLite.  String of the filename to load data to.  Unfortunately, will not work with `:memory:` (well it will, but all data will be lost after disconnecting, so it's kind of pointless). |
 
 ### Inserter Config (Sequelize Bulk Insert alternative)
 
