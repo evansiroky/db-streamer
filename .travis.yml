@@ -6,8 +6,6 @@ cache:
 
 node_js:
   - '6'
-  - '5'
-  - '4'
 
 env:
   - COVERAGE=false
@@ -17,7 +15,6 @@ services:
   - postgresql
 
 before_install:
-  - npm i -g npm@^2.0.0
   - npm prune
 
 before_script:
@@ -30,17 +27,11 @@ before_script:
   - psql -U postgres -c 'GRANT streamer_role TO streamer;'
   - psql -U postgres -c 'GRANT ALL ON DATABASE streamer_test TO streamer_role;'
 
-matrix:
-  fast_finish: true
-  include:
-    - node_js: "0.12"
-      env: COVERAGE=true
-      script: "npm run codeclimate"
-  allow_failures:
-    - node_js: "0.12"
-      env: COVERAGE=true
-      script: "npm run codeclimate"
-  
+install:
+  - npm i
+script:
+  - npm run codeclimate
+
 after_success:
   - npm run semantic-release
 
