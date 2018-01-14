@@ -2,9 +2,15 @@
 
 [![npm version](https://badge.fury.io/js/db-streamer.svg)](http://badge.fury.io/js/db-streamer) [![Build Status](https://travis-ci.org/evansiroky/db-streamer.svg?branch=master)](https://travis-ci.org/evansiroky/db-streamer) [![Dependency Status](https://david-dm.org/evansiroky/db-streamer.svg)](https://david-dm.org/evansiroky/db-streamer) [![Test Coverage](https://codeclimate.com/github/evansiroky/db-streamer/badges/coverage.svg)](https://codeclimate.com/github/evansiroky/db-streamer/coverage)
 
-A library to stream data into a SQL database.  Currently supports streaming data into PostgreSQL, MySQL or SQLite.
+A cross-db library to stream data into and out of a SQL database.  Currently supports streaming data into or out of PostgreSQL, MySQL or SQLite.
 
-## Additional Dependencies
+## Table of Contents
+
+* [Installation](#installation)
+* [Inserting](#inserting)
+* [Querying](#querying)
+
+## Installation
 
 In order to use this library, you must also install the additional libraries in your project depending on the database that you use.
 
@@ -32,49 +38,51 @@ You must also install the package `promise-polyfill` and write additional code. 
 
 For now, deferred inserting with SQLite assumes that a unix shell is available to pipe commands to the sqlite3 binary tool.
 
-## Usage
+## Inserting
 
-    var dbStreamer = require('db-streamer'),
-      connString = 'postgres://streamer:streamer@localhost:5432/streamer-test';
+```js
+var dbStreamer = require('db-streamer'),
+  connString = 'postgres://streamer:streamer@localhost:5432/streamer-test';
 
-    // create inserter
-    var inserter = dbStreamer.getInserter({
-      dbConnString: connString,
-      tableName: 'test_table',
-      columns: ['a', 'b', 'c']
-    });
+// create inserter
+var inserter = dbStreamer.getInserter({
+  dbConnString: connString,
+  tableName: 'test_table',
+  columns: ['a', 'b', 'c']
+});
 
-    // establish connection
-    inserter.connect(function(err, client) {
+// establish connection
+inserter.connect(function(err, client) {
 
-      // push some rows
-      inserter.push({a: 1, b: 'one', c: new Date() });
-      inserter.push({a: 2, b: 'two', c: new Date() });
-      inserter.push({a: 3, b: 'three', c: new Date() });
+  // push some rows
+  inserter.push({a: 1, b: 'one', c: new Date() });
+  inserter.push({a: 2, b: 'two', c: new Date() });
+  inserter.push({a: 3, b: 'three', c: new Date() });
 
-      // create child table inserter using deferring strategy
-      // this is useful to avoid missing foreign key conflicts as a result of race conditions
-      var childInserter = dbStreamer.getInserter({
-        dbConnString: connString,
-        tableName: 'child_table',
-        columns: ['a', 'd', 'e'],
-        deferUntilEnd: true
-      });
+  // create child table inserter using deferring strategy
+  // this is useful to avoid missing foreign key conflicts as a result of race conditions
+  var childInserter = dbStreamer.getInserter({
+    dbConnString: connString,
+    tableName: 'child_table',
+    columns: ['a', 'd', 'e'],
+    deferUntilEnd: true
+  });
 
-      childInserter.push({a: 2, d: 'asdf', e: new Date() });
-      childInserter.push({a: 3, d: 'ghjk', e: new Date() });
+  childInserter.push({a: 2, d: 'asdf', e: new Date() });
+  childInserter.push({a: 3, d: 'ghjk', e: new Date() });
 
-      childInserter.setEndHandler(callback);
+  childInserter.setEndHandler(callback);
 
-      // set end callback
-      inserter.setEndHandler(function() {
-        childInserter.end();
-      });
+  // set end callback
+  inserter.setEndHandler(function() {
+    childInserter.end();
+  });
 
-      // announce end
-      inserter.end();
+  // announce end
+  inserter.end();
 
-    });
+});
+```
 
 ### Inserter Config
 
@@ -94,3 +102,26 @@ For now, deferred inserting with SQLite assumes that a unix shell is available t
 | useSequelizeBulkInsert | Boolean.  Perform the insert using a combination of [async.cargo](https://github.com/caolan/async#cargo) and [sequelize bulkInsert](http://docs.sequelizejs.com/en/latest/api/model/#bulkcreaterecords-options-promisearrayinstance).  Must provide `sequelizeModel` parameter too. |
 | sequelizeModel | The sequelize model to perform a bulk insert with. |
 | deferUntilEnd | Boolean (default=false).  Pause all cargo iterations until calling `end`. |
+
+## Querying
+
+```js
+const querier = dbStreamer.getQuerier({
+  dbConnString: 'postgres://streamer:streamer@localhost:5432/streamer-test'
+})
+
+querier.execute(
+  'SELECT * FROM test_table',
+  row => console.log,
+  err => {
+    console.log('done')
+  }
+)
+```
+
+### Querying Config
+
+| Key | Description |
+| --- | --- |
+| dbConnString | A database connection string. |
+| sqliteStorage | Required if using SQLite.  String of the filename to load data from.  Unfortunately, will not work with `:memory:` (well it will, but a new connection is opened, so there won't be any data to query, so it's kind of pointless). |
