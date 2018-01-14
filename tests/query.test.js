@@ -11,15 +11,15 @@ describe('querying', () => {
     rimraf.sync(config.sqliteStorage)
   })
 
-  beforeEach(function (done) {
+  beforeEach(function () {
     // (re)create table
     this.timeout(15000)
 
     // create table
-    config.testModel.sync({force: true})
+    return config.testModel.sync({force: true})
       .then(() => {
         // load a bunch of rows
-        config.testModel
+        return config.testModel
           .bulkCreate(
             [
               { a: 1, b: '1', c: new Date(2008, 1, 1) },
@@ -31,9 +31,6 @@ describe('querying', () => {
               { a: 7, b: '7', c: new Date(2008, 7, 7) }
             ]
           )
-          .then(result => {
-            done()
-          })
       })
   })
 
