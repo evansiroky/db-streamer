@@ -42,7 +42,7 @@ streamer.getQuerier = function (config) {
           config.hostname = parsed.hostname
           config.port = parseInt(parsed.port, 10)
         }
-        return require('./lib/queriers/mySqlQuerier.js')(config)
+        return require('./lib/queriers/mysqlQuerier.js')(config)
       default:
         throw new Error('Unsupported protocol: ' + parsed.protocol)
     }
