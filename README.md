@@ -119,7 +119,7 @@ querier.execute(
 )
 ```
 
-### Inserter Config
+### Querying Config
 
 | Key | Description |
 | --- | --- |
